@@ -1,0 +1,5 @@
+not-enough-xp-msg: You do not have enough xp!
+non-numeric-argument: Non-numeric-argument encountered!
+sellxp-msg: "{xp} for {amount}"
+form-support: false
+amount-per-xp: 10
