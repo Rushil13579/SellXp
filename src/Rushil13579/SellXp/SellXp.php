@@ -14,6 +14,7 @@ use pocketmine\utils\TextFormat as C;
 class SellXp extends PluginBase {
 
     public function onEnable(){
+        $this->formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
         $this->saveDefaultConfig();
         $this->getResource("config.yml");
     }
@@ -57,11 +58,9 @@ class SellXp extends PluginBase {
     }
 
     public function SellXpForm($player){
-        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createCustomForm(function (Player $player, $data){
+        $form = $this->formapi->createCustomForm(function (Player $player, $data){
             if($data !== null){
                 $amount = $data[0];
-                $player->sendMessage($amount);
                 if(is_numeric($amount)){
                     $amount = round($amount);
                     if($player->getXpLevel() >= $amount){
