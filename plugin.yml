@@ -3,7 +3,6 @@ main: Rushil13579\SellXp\SellXp
 api: 3.0.0
 version: 1.0.0
 depend: [EconomyAPI]
-softdepend: [FormAPI]
 
 commands:
   sellxp:
