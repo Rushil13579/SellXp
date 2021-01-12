@@ -5,4 +5,8 @@ branches:
 projects:
   SellXp:
     path: ""
+    icon: "/assets/Logo.png"
+    libs:
+      - src: jojoe77777/FormAPI/libFormAPI
+        version: 1.3.0
 ...
