@@ -21,8 +21,6 @@ class SellXp extends PluginBase {
     public function onEnable(){
         $this->saveDefaultConfig();
         $this->getResource("config.yml");
-        $this->fa = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $this->cfg = $this->getConfig();
     }
 
     public function onCommand(CommandSender $s, Command $cmd, String $label, Array $args) : bool {
@@ -31,11 +29,11 @@ class SellXp extends PluginBase {
             case "sellxp":
             if($s instanceof Player){
                 if(!isset($args[0])){
-                    if($this->cfg->get("formapi-support") == true && $this->fa !== null){
+                    if($this->getConfig()->get("formapi-support") == true && $this->getServer()->getPluginManager()->getPlugin("FormAPI") !== null){
                       if($s->getXpLevel() > 0){
                           $this->sellXp($s);
                       } else {
-                        $s->sendMessage($this->cfg->get("not-enough-xp-msg"));
+                        $s->sendMessage($this->getConfig()->get("not-enough-xp-msg"));
                       }
                     } else {
                       $s->sendMessage(C::RED . "Usage: /sellxp [amount]");
@@ -46,17 +44,17 @@ class SellXp extends PluginBase {
                         if($amount == round($amount)){
                             if ($s->getXpLevel() >= $amount) {
                                 $s->subtractXpLevels((int)$amount);
-                                EconomyAPI::getInstance()->addMoney($s, $amount * $this->cfg->get("amount-per-xp"));
-                                $format = str_replace(["{xp}", "{amount}"], [$amount, $amount * $this->cfg->get("amount-per-xp")], $this->cfg->get("sellxp-msg"));
+                                EconomyAPI::getInstance()->addMoney($s, $amount * $this->getConfig()->get("amount-per-xp"));
+                                $format = str_replace(["{xp}", "{amount}"], [$amount, $amount * $this->getConfig()->get("amount-per-xp")], $this->getConfig()->get("sellxp-msg"));
                                 $s->sendMessage($format);
                             } else {
-                                $s->sendMessage($this->cfg->get("not-enough-xp-msg"));
+                                $s->sendMessage($this->getConfig()->get("not-enough-xp-msg"));
                             }
                         } else {
-                            $s->sendMessage($this->cfg->get("non-integer-given"));
+                            $s->sendMessage($this->getConfig()->get("non-integer-given"));
                         }
                     } else {
-                        $s->sendMessage($this->cfg->get("non-numeric-argument"));
+                        $s->sendMessage($this->getConfig()->get("non-numeric-argument"));
                     }
                 }
             } else {
@@ -67,22 +65,23 @@ class SellXp extends PluginBase {
     }
 
     public function sellXp($player){
-        $form = $this->fa->createCustomForm(function (Player $player, array $data = null){
+        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+        $form = $api->createCustomForm(function (Player $player, array $data = null){
             if($data === null){
                 return true;
             }
             $amount = $data[0];
             if($player->getXpLevel() >= $amount){
                 $player->subtractXpLevels((int)$amount);
-                EconomyAPI::getInstance()->addMoney($player, $amount * $this->cfg->get("amount-per-xp"));
-                $format = str_replace(["{xp}", "{amount}"], [$amount, $amount * $this->cfg->get("amount-per-xp")], $this->cfg->get("sellxp-msg"));
+                EconomyAPI::getInstance()->addMoney($player, $amount * $this->getConfig()->get("amount-per-xp"));
+                $format = str_replace(["{xp}", "{amount}"], [$amount, $amount * $this->getConfig()->get("amount-per-xp")], $this->getConfig()->get("sellxp-msg"));
                 $player->sendMessage($format);
             } else {
-                $player->sendMessage($this->cfg->get("not-enough-xp-msg"));
+                $player->sendMessage($this->getConfig()->get("not-enough-xp-msg"));
             }
         });
-        $form->setTitle($this->cfg->get("form-title"));
-        $format = str_replace("{xp-money-exchange-rate}", $this->cfg->get("amount-per-xp"), $this->cfg->get("slider-name"));
+        $form->setTitle($this->getConfig()->get("form-title"));
+        $format = str_replace("{xp-money-exchange-rate}", $this->getConfig()->get("amount-per-xp"), $this->getConfig()->get("slider-name"));
         $form->addSlider($format, 1, $player->getXpLevel(), 1);
         $form->sendToPlayer($player);
         return $form;
