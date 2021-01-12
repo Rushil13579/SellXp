@@ -11,7 +11,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use onebone\economyapi\EconomyAPI;
-use jojoe77777\FormAPI\FormAPI;
+use jojoe77777\FormAPI\CustomForm;
 
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
@@ -29,7 +29,7 @@ class SellXp extends PluginBase {
             case "sellxp":
             if($s instanceof Player){
                 if(!isset($args[0])){
-                    if($this->getConfig()->get("formapi-support") == true && $this->getServer()->getPluginManager()->getPlugin("FormAPI") !== null){
+                    if($this->getConfig()->get("formapi-support") == true){
                       if($s->getXpLevel() > 0){
                           $this->sellXp($s);
                       } else {
@@ -65,8 +65,7 @@ class SellXp extends PluginBase {
     }
 
     public function sellXp($player){
-        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createCustomForm(function (Player $player, array $data = null){
+        $form = new CustomForm(function (Player $player, array $data = null){
             if($data === null){
                 return true;
             }
