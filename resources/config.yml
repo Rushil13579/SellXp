@@ -1,17 +1,29 @@
 # SELLXP PLUGIN
 # MADE BY: Rushil13579 | Rushil#2326
 
+# FORMAPI SUPPORT [SET AS 'false' TO TURN OFF] [Note: ONLY KEEP AS TRUE IF YOU HAVE FORMAPI BY JoJoe77777]
+formapi-support: true
+
+# THE TITLE OF THE FORM
+form-title: "§l§5Sell Xp"
+
+# THE CONTENT OF THE FORM
+form-content: "§l§aSelect how much xp to sell"
+
+# THE NAME OF THE SLIDER [USE {xp-money-exchange-rate} TO GET THE VALUE IN 'amount-per-xp', i.e the exchange rate] [THE SELECTED AMOUNT OF XP WILL BE DISPLAYED AT THE END]
+slider-name: "§bSelect the amount of §cXp §bto sell\n§e1 Xp §c-> §e{xp-money-exchange-rate}$\n§bAmount of Xp§c"
+
 # MESSAGE TO BE SENT IF THE PLAYER DOESNT HAVE ENOUGH XP!
 not-enough-xp-msg: "§cYou do not have enough Xp!"
 
 # MESSAGE TO BE SENT IF THE ARGUMENT GIVEN BY THE PLAYER IS NOT A NUMBER!
-non-numeric-argument: "§cPlease enter a integer!"
+non-numeric-argument: "§cPlease enter a numeric argument!"
 
 # MESSAGE TO BE SENT IF THE ARGUMENT GIVEN BY THE PLAYER IS NOT A INTEGER!
-non-integer-given: "§cPlease enter a integer"
+non-integer-given: "§cPlease enter a integer!"
 
 # MESSAGE TO BE SENT WHEN THE PLAYER SELLS XP [USE {xp} FOR AMOUNT OF XP SOLD AND USE {amount} FOR SELLING AMOUNT]
-sellxp-msg: "§bSold §6{xp} §bfor §6{amount}"
+sellxp-msg: "§bSold §6{xp} §bXp for §6{amount}$"
 
 # AMOUNT FOR EACH LEVEL OF XP! [XP-MONEY EXCHANGE RATE]
 amount-per-xp: "10"
