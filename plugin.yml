@@ -7,3 +7,4 @@ depend: [EconomyAPI]
 commands:
   sellxp:
     description: Sell Your Xp!
+    aliases: [sxp]
