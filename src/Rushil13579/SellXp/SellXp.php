@@ -18,9 +18,12 @@ use pocketmine\utils\TextFormat as C;
 
 class SellXp extends PluginBase {
 
+    public $cfg;
+
     public function onEnable(){
-        $this->saveDefaultConfig();
-        $this->getResource("config.yml");
+        $this->saveResource("config.yml");
+
+        $this->cfg = $this->getConfig();
     }
 
     public function onCommand(CommandSender $s, Command $cmd, String $label, Array $args) : bool {
@@ -40,7 +43,7 @@ class SellXp extends PluginBase {
                     }
                 } else {
                     $amount = $args[0];
-                    if(is_numeric($args[0])) {
+                    if(is_numeric($args[0]) && $args[0] > 0){
                         if($amount == round($amount)){
                             if ($s->getXpLevel() >= $amount) {
                                 $s->subtractXpLevels((int)$amount);
@@ -64,7 +67,7 @@ class SellXp extends PluginBase {
         return true;
     }
 
-    public function sellXp($player){
+    public function sellXpForm($player){
         $form = new CustomForm(function (Player $player, array $data = null){
             if($data === null){
                 return true;
